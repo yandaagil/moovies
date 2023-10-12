@@ -6,7 +6,7 @@ import { ImageOff } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/navigation";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { ratingBadge } from '@/utils/rating'
 
 const OtherMovies = ({ title, movies, notFound }: { title: string, movies?: MovieList[], notFound: string }) => {
@@ -19,10 +19,8 @@ const OtherMovies = ({ title, movies, notFound }: { title: string, movies?: Movi
       {/* movie card */}
       <Swiper
         slidesPerView={3}
-        navigation={true}
         loop={true}
         modules={[
-          Navigation,
           Pagination
         ]}
         pagination={{

@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player/youtube'
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from './ui/button'
 import { Play } from 'lucide-react'
@@ -9,7 +9,7 @@ const Player = ({ movieTrailerKey }: { movieTrailerKey: string }) => {
     <Dialog>
 
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="hidden md:flex">
           <Play className="mr-1" size={20} />
           <span>Trailer</span>
         </Button>

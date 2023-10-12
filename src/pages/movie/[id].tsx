@@ -32,7 +32,7 @@ const MovieDetail = () => {
         {/* poster */}
         <div className="w-full mb-5 min-h-[500px] relative lg:w-2/6 lg:mr-5 lg:max-h-[500px]">
           {movieDetail?.poster_path !== null
-            ? <Image src={`https://image.tmdb.org/t/p/w500/${movieDetail?.poster_path}`} alt={movieDetail?.title ?? "Poster image"} className="rounded-lg" fill={true} style={{ objectFit: "none" }} priority={true} />
+            ? <Image src={`https://image.tmdb.org/t/p/w500/${movieDetail?.poster_path}`} alt={movieDetail?.title ?? "Poster image"} className="rounded-lg" fill={true} style={{ objectFit: "cover" }} priority={true} />
             : <div className="flex items-center justify-center rounded-lg bg-foreground/10 h-[250px]">
               <ImageOff size={80} />
             </div>

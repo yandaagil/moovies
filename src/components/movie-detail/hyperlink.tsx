@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from '../ui/button'
 import Player from '../player'
-import { Globe } from 'lucide-react'
+import { Globe, Play } from 'lucide-react'
 import { MovieDetailList } from '@/type'
 
 const Hyperlink = ({ links }: { links?: MovieDetailList | null }) => {
@@ -23,7 +23,15 @@ const Hyperlink = ({ links }: { links?: MovieDetailList | null }) => {
 
       {/* trailer */}
       {movieTrailerKey &&
-        <Player movieTrailerKey={movieTrailerKey ?? ""} />
+        <>
+          <Player movieTrailerKey={movieTrailerKey ?? ""} />
+          <Link href={`https://www.youtube.com/watch?v=${movieTrailerKey}`} target="_blank" className="md:hidden">
+            <Button variant="outline">
+              <Play className="mr-1" size={20} />
+              <span>Trailer</span>
+            </Button>
+          </Link>
+        </>
       }
 
       {/* website */}
