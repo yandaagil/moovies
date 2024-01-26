@@ -1,8 +1,8 @@
 import React from 'react'
 import Navbar from '../navbar/navbar'
-import Footer from './footer'
+import Footer from '../footer'
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
@@ -16,4 +16,4 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default Layout
+export default MainLayout

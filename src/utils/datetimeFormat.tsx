@@ -26,8 +26,16 @@ export const calculateAge = (birthdate: string, deathdate?: string): string => {
   const months = end.getMonth() - birthDate.getMonth();
 
   if (months < 0 || (months === 0 && end.getDate() < birthDate.getDate())) {
-    return `${deathdate || ''} (${age - 1} years old)`;
+    if (deathdate) {
+      return `${deathdate} (${age - 1} years old)`;
+    } else {
+      return `${age - 1} years old`;
+    }
+  } else {
+    if (deathdate) {
+      return `${deathdate} (${age} years old)`;
+    } else {
+      return `${age} years old`;
+    }
   }
-
-  return `${deathdate ? deathdate : age} years old`;
 };

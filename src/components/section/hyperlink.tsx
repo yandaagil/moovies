@@ -3,13 +3,12 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Player from '../player'
 import { Globe, Play } from 'lucide-react'
-import { MovieDetailList } from '@/type'
+import { MovieDetailList } from '@/types/type'
 
 const Hyperlink = ({ links }: { links?: MovieDetailList | null }) => {
   const movieTrailerKey = links?.videos.results
     .filter((video) =>
-      video.official && video.site === "YouTube" && video.type === "Trailer")[0]
-    ?.key;
+      video.official && video.site === "YouTube" && video.type === "Trailer")[0]?.key;
 
   return (
     <div className="mt-5 flex flex-row gap-2">
@@ -43,7 +42,6 @@ const Hyperlink = ({ links }: { links?: MovieDetailList | null }) => {
           </Button>
         </Link>
       }
-
     </div>
   )
 }

@@ -6,8 +6,10 @@ import { Button } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Search from './search'
 import Sidemenu from './sidemenu'
+import { useRouter } from 'next/router'
 
 const Navbar = () => {
+  const { pathname } = useRouter()
   const { setTheme } = useTheme()
   const [lightMode, setLightMode] = useState<string>('light');
 
@@ -35,13 +37,13 @@ const Navbar = () => {
           {/* navigation */}
           <ul className="hidden flex-row gap-5 items-center md:flex">
             <Link href="/movie/popular" className="cursor-pointer">
-              <li className="text-sm font-semibold transition-colors text-foreground/60 hover:text-foreground/80">Popular</li>
+              <li className={`text-sm font-semibold transition-colors ${pathname === '/movie/popular' ? 'text-foreground' : 'text-foreground/60'} hover:text-foreground/80`}>Popular</li>
             </Link>
             <Link href="/movie/upcoming" className="cursor-pointer">
-              <li className="text-sm font-semibold transition-colors text-foreground/60 hover:text-foreground/80">Upcoming</li>
+              <li className={`text-sm font-semibold transition-colors ${pathname === '/movie/upcoming' ? 'text-foreground' : 'text-foreground/60'} hover:text-foreground/80`}>Upcoming</li>
             </Link>
             <Link href="/movie/top-rated" className="cursor-pointer">
-              <li className="text-sm font-semibold transition-colors text-foreground/60 hover:text-foreground/80">Top Rated</li>
+              <li className={`text-sm font-semibold transition-colors ${pathname === '/movie/top-rated' ? 'text-foreground' : 'text-foreground/60'} hover:text-foreground/80`}>Top Rated</li>
             </Link>
           </ul>
 

@@ -4,14 +4,14 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ImageOff } from 'lucide-react';
-import type { Cast } from '@/type';
+import { Cast } from '@/types/type';
 
 const Cast = ({ credits }: { credits?: Cast }) => {
   const [showAllCast, setShowAllCast] = useState<boolean>(false);
 
   return (
     <>
-      <div className="mt-5 flex flex-row justify-between items-center">
+      <div className="mt-10 flex flex-row justify-between items-center">
         <h2 className="text-xl font-bold">Cast</h2>
         <Button variant="link" onClick={() => setShowAllCast(!showAllCast)}>
           {showAllCast ? "Hide all cast" : "Show all cast"}
@@ -40,12 +40,20 @@ const Cast = ({ credits }: { credits?: Cast }) => {
           {credits?.slice(0, showAllCast ? credits.length : 5).map((cast, index) => (
             <TableRow key={index}>
               <TableCell className="relative">
-                {cast.profile_path !== null
-                  ? <Image src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`} alt={cast.name ?? "Actor image"} fill={true} sizes="h-full" style={{ objectFit: "contain" }} priority={true} />
-                  : <div className="flex justify-center">
+                {cast.profile_path !== null ? (
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`}
+                    alt={cast.name ?? "Actor image"}
+                    fill={true}
+                    sizes="h-full"
+                    style={{ objectFit: "contain" }}
+                    priority={true}
+                  />
+                ) : (
+                  <div className="flex justify-center">
                     <ImageOff size={20} />
                   </div>
-                }
+                )}
               </TableCell>
               <TableCell>
                 <Link href={`/actors/${cast.id}`}>
