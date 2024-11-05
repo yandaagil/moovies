@@ -5,8 +5,10 @@ import { Moon, Sun } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Search from './search'
-import Sidemenu from './sidemenu'
+import Sidebar from './sidebar'
 import { useRouter } from 'next/router'
+import { nav } from '@/constants/navbar'
+import { cn } from '@/lib/utils'
 
 const Navbar = () => {
   const { pathname } = useRouter()
@@ -29,35 +31,42 @@ const Navbar = () => {
       <nav className="w-full flex flex-row items-center justify-between lg:w-5/6">
         <div className="flex flex-row gap-10">
 
-          {/* logo */}
+          {/* Logo */}
           <Link href="/">
             <h2 className="text-lg font-bold text-foreground">Moovies</h2>
           </Link>
 
-          {/* navigation */}
+          {/* Navigation */}
           <ul className="hidden flex-row gap-5 items-center md:flex">
-            <Link href="/movie/popular" className="cursor-pointer">
-              <li className={`text-sm font-semibold transition-colors ${pathname === '/movie/popular' ? 'text-foreground' : 'text-foreground/60'} hover:text-foreground/80`}>Popular</li>
-            </Link>
-            <Link href="/movie/upcoming" className="cursor-pointer">
-              <li className={`text-sm font-semibold transition-colors ${pathname === '/movie/upcoming' ? 'text-foreground' : 'text-foreground/60'} hover:text-foreground/80`}>Upcoming</li>
-            </Link>
-            <Link href="/movie/top-rated" className="cursor-pointer">
-              <li className={`text-sm font-semibold transition-colors ${pathname === '/movie/top-rated' ? 'text-foreground' : 'text-foreground/60'} hover:text-foreground/80`}>Top Rated</li>
-            </Link>
+            {nav.map(({ title, path }) =>
+              <Link href={path} key={title} className='cursor-pointer'>
+                <li className={cn("text-sm font-semibold transition-colors text-foreground/60 hover:text-foreground/80",
+                  { "text-foreground": pathname === path }
+                )}>
+                  {title}
+                </li>
+              </Link>
+            )}
           </ul>
 
         </div>
         <div className="flex flex-row gap-3 items-center">
 
-          {/* search */}
+          {/* Search */}
           <Search />
 
-          {/* dark mode toggle */}
+          {/* Dark Mode Toggle */}
           <TooltipProvider>
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="px-2 rounded-full" onClick={toggleLightMode}>{lightMode === "dark" ? <Sun /> : <Moon />}</Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="px-2 rounded-full"
+                  onClick={toggleLightMode}
+                >
+                  {lightMode === "dark" ? <Sun /> : <Moon />}
+                </Button>
               </TooltipTrigger>
               <TooltipContent>
                 {lightMode === "dark" ? "Change to light mode" : "Change to dark mode"}
@@ -65,8 +74,8 @@ const Navbar = () => {
             </Tooltip>
           </TooltipProvider>
 
-          {/* sidemenu for mobile */}
-          <Sidemenu />
+          {/* Sidebar for Mobile */}
+          <Sidebar />
         </div>
       </nav>
     </header>

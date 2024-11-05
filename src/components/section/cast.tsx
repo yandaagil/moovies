@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ImageOff } from 'lucide-react';
-import { Cast } from '@/types/type';
+import { Cast as CastType } from '@/types/type';
 
-const Cast = ({ credits }: { credits?: Cast }) => {
+const Cast = ({ credits }: { credits?: CastType }) => {
   const [showAllCast, setShowAllCast] = useState<boolean>(false);
 
   return (
@@ -56,7 +56,7 @@ const Cast = ({ credits }: { credits?: Cast }) => {
                 )}
               </TableCell>
               <TableCell>
-                <Link href={`/actors/${cast.id}`}>
+                <Link href={`/actor/${cast.id}`}>
                   <p className="underline-offset-4 hover:underline">{cast.name}</p>
                 </Link>
               </TableCell>

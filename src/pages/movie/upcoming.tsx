@@ -1,35 +1,42 @@
-import { useEffect, useState } from "react";
 import Title from '@/components/head';
 import { Button } from '@/components/ui/button';
-import { MovieList } from '@/types/type';
 import MovieContainer from '@/components/movieContainer';
-import movieServices from "@/services/services";
+import { useUpcomingMovies } from "@/hooks/useMovies";
 
 export default function Upcoming() {
-  const [page, setPage] = useState<number>(1);
-  const [upcomingMovies, setUpcomingMovies] = useState<MovieList[]>([]);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    error
+  } = useUpcomingMovies();
 
-  const handleLoadMore = async () => {
-    const newPage = page + 1;
-    const { data } = await movieServices.getUpcomingMovies(newPage);
-    setPage(newPage);
-    setUpcomingMovies((prevItems) => [...prevItems, ...data.results]);
+  if (isPending) {
+    return <div>Loading...</div>;
   }
 
-  useEffect(() => {
-    movieServices.getUpcomingMovies(1).then(({ data }) => {
-      setUpcomingMovies(data.results);
-    });
-  }, []);
+  if (error) {
+    return <div>Error loading movies</div>;
+  }
+
+  const upcomingMovies = data.pages.flatMap(page => page.data.results) ?? [];
 
   return (
     <>
       <Title title="Upcoming" />
 
-      <MovieContainer title='Popular' movieType={upcomingMovies}>
-        <Button variant="link" onClick={handleLoadMore}>
-          See more
-        </Button>
+      <MovieContainer title='Upcoming' movieType={upcomingMovies}>
+        {hasNextPage && (
+          <Button
+            variant="link"
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+          >
+            {isFetchingNextPage ? 'Loading more...' : 'See more'}
+          </Button>
+        )}
       </MovieContainer>
     </>
   )

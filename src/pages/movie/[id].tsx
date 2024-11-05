@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import Title from '@/components/head';
-import { MovieDetailList } from '@/types/type';
 import MovieDetailLayout from '@/components/layout/movieDetailLayout';
-import movieServices from '@/services/services';
+import { useMovieDetail } from '@/hooks/useMovies';
 
 const MovieDetail = () => {
-  const { query } = useRouter();
-  const { id } = query;
-  const [movieDetail, setMovieDetail] = useState<MovieDetailList | null>(null);
+  const { query: { id } } = useRouter();
+  const { data, error, isPending } = useMovieDetail(id as string);
 
-  useEffect(() => {
-    if (!id) return;
-    movieServices.getMovieDetail(id).then(({ data }) => {
-      setMovieDetail(data);
-    })
-  }, [id]);
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading movie detail</div>;
+  }
+
+  const movieDetail = data.data;
 
   return (
     <>
-      <Title title={movieDetail?.title} />
+      <Title title={movieDetail.title} />
 
       <MovieDetailLayout movieDetail={movieDetail} />
     </>

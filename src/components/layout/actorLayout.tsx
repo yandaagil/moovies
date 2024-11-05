@@ -1,16 +1,16 @@
 import Image from "next/image"
 import { ImageOff } from "lucide-react"
-import { calculateAge } from "@/utils/datetimeFormat"
+import { calculateAge } from "@/helpers/calculateAge"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import OtherMovies from "../section/otherMovies"
 import { Actor } from "@/types/type"
 
-const ActorLayout = ({ actor }: { actor: Actor | null }) => {
+const ActorLayout = ({ actor }: { actor: Actor }) => {
   return (
     <div className="mt-5 flex flex-col lg:flex-row">
 
-      {/* poster */}
+      {/* Poster */}
       <div className="w-full mb-5 min-h-[500px] relative lg:w-2/6 lg:mr-5 lg:max-h-[500px]">
         {actor?.profile_path !== null ? (
           <Image
@@ -30,22 +30,30 @@ const ActorLayout = ({ actor }: { actor: Actor | null }) => {
 
       <article className="w-full flex flex-col lg:w-4/6">
 
-        {/* name */}
+        {/* Name */}
         <h1 className="text-3xl font-bold">{actor?.name}</h1>
 
-        {/* details */}
-        <p className="mt-3 text-sm lg:text-base"><span className="font-bold">Born: </span>{actor?.birthday ?? "N/A"}</p>
+        {/* Details */}
+        <p className="mt-3 text-sm lg:text-base">
+          <span className="font-bold">Born: </span>
+          {actor?.birthday ?? "N/A"}
+        </p>
         <p className="text-sm lg:text-base">
-          <span className="font-bold">{`${actor?.deathday ? "Died: " : "Age: "}`}</span>
+          <span className="font-bold">
+            {`${actor?.deathday ? "Died: " : "Age: "}`}
+          </span>
           {actor?.birthday
             ? actor?.deathday
               ? calculateAge(actor.birthday, actor.deathday)
               : calculateAge(actor.birthday)
             : "N/A"}
         </p>
-        <p className="text-sm lg:text-base"><span className="font-bold">Place of Birth: </span>{actor?.place_of_birth ?? "N/A"}</p>
+        <p className="text-sm lg:text-base">
+          <span className="font-bold">Place of Birth: </span>
+          {actor?.place_of_birth ?? "N/A"}
+        </p>
 
-        {/* imdb */}
+        {/* IMDb */}
         <div className="mt-5">
           <Link href={`https://www.imdb.com/name/${actor?.imdb_id}`} target="__blank">
             <Button className="bg-[#F5C518] text-[#0a0a0a] font-bold hover:bg-[#f5d059]">
@@ -54,11 +62,11 @@ const ActorLayout = ({ actor }: { actor: Actor | null }) => {
           </Link>
         </div>
 
-        {/* biography */}
+        {/* Biography */}
         <h2 className="mt-10 text-xl font-bold">Biography</h2>
         <p className="mt-2 text-sm lg:text-base">{actor?.biography !== "" ? actor?.biography : "No available biography."}</p>
 
-        {/* movie credits */}
+        {/* Movie Credits */}
         <OtherMovies title="Movie Credits" movies={actor?.movie_credits.cast} notFound="No movie credits found" />
       </article>
     </div>

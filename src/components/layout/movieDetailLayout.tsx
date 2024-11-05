@@ -7,11 +7,11 @@ import { MovieDetailList } from "@/types/type"
 import Genres from "../section/genres"
 import Cast from "../section/cast"
 
-const MovieDetailLayout = ({ movieDetail }: { movieDetail: MovieDetailList | null }) => {
+const MovieDetailLayout = ({ movieDetail }: { movieDetail: MovieDetailList }) => {
   return (
     <div className="mt-5 flex flex-col lg:flex-row">
 
-      {/* poster */}
+      {/* Poster */}
       <div className="w-full mb-5 relative aspect-[9/13] h-fit lg:w-2/6 lg:mr-5">
         {movieDetail?.poster_path !== null ? (
           <Image
@@ -30,27 +30,27 @@ const MovieDetailLayout = ({ movieDetail }: { movieDetail: MovieDetailList | nul
 
       <article className="w-full flex flex-col lg:w-4/6">
 
-        {/* title */}
+        {/* Title */}
         <h1 className="text-3xl font-bold">{movieDetail?.title}</h1>
         <p className="text-sm text-muted-foreground lg:text-base">{movieDetail?.tagline}</p>
 
-        {/* movie info */}
+        {/* Movie Info */}
         <MovieInfo movieInfo={movieDetail} />
 
-        {/* genres */}
+        {/* Genres */}
         {movieDetail?.genres && movieDetail.genres.length > 0 && <Genres genres={movieDetail} />}
 
-        {/* hyperlink */}
+        {/* Hyperlink */}
         <Hyperlink links={movieDetail} />
 
-        {/* overview */}
+        {/* Overview */}
         <h2 className="mt-10 text-xl font-bold">Overview</h2>
         <p className="mt-2 text-sm lg:text-base">{movieDetail?.overview}</p>
 
-        {/* cast */}
+        {/* Cast */}
         {movieDetail?.credits.cast && movieDetail.credits.cast.length > 0 && <Cast credits={movieDetail?.credits.cast} />}
 
-        {/* movie recommendation */}
+        {/* Movie Recommendation */}
         <OtherMovies title="Recommendation" movies={movieDetail?.recommendations.results} notFound="No recommendation movies found" />
       </article>
     </div>

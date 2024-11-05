@@ -1,35 +1,42 @@
-import { useEffect, useState } from "react";
 import Title from '@/components/head';
 import { Button } from '@/components/ui/button';
-import { MovieList } from '@/types/type';
 import MovieContainer from '@/components/movieContainer';
-import movieServices from "@/services/services";
+import { useTopRatedMovies } from "@/hooks/useMovies";
 
 export default function TopRated() {
-  const [page, setPage] = useState<number>(1);
-  const [topRatedMovies, setTopRatedMovies] = useState<MovieList[]>([]);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    error
+  } = useTopRatedMovies();
 
-  const handleLoadMore = async () => {
-    const newPage = page + 1;
-    const { data } = await movieServices.getTopRatedMovies(newPage);
-    setPage(newPage);
-    setTopRatedMovies((prevItems) => [...prevItems, ...data.results]);
+  if (isPending) {
+    return <div>Loading...</div>;
   }
 
-  useEffect(() => {
-    movieServices.getTopRatedMovies(1).then(({ data }) => {
-      setTopRatedMovies(data.results);
-    });
-  }, []);
+  if (error) {
+    return <div>Error loading movies</div>;
+  }
+
+  const topRatedMovies = data.pages.flatMap(page => page.data.results) ?? [];
 
   return (
     <>
       <Title title="Top Rated" />
 
-      <MovieContainer title='Popular' movieType={topRatedMovies}>
-        <Button variant="link" onClick={handleLoadMore}>
-          See more
-        </Button>
+      <MovieContainer title='Top Rated' movieType={topRatedMovies}>
+        {hasNextPage && (
+          <Button
+            variant="link"
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+          >
+            {isFetchingNextPage ? 'Loading more...' : 'See more'}
+          </Button>
+        )}
       </MovieContainer>
     </>
   )

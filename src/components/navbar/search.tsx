@@ -16,8 +16,8 @@ const Search = () => {
   const [debouncedSearch] = useDebounce(search, 1000);
 
   const handleSearch = async (debouncedSearch: string) => {
-    const { data } = await movieServices.searchMovies(debouncedSearch)
-    setSearchedMovies(data.results)
+    const { data: { results } } = await movieServices.searchMovies(debouncedSearch)
+    setSearchedMovies(results)
   };
 
   const handleClearSearch = () => {
@@ -69,7 +69,13 @@ const Search = () => {
             </CommandList>
             {searchedMovies.length > 0 ? (
               <div className='border-t border-muted text-center'>
-                <Button variant='link' className='text-xs text-muted-foreground' onClick={handleClearSearch}>Clear search</Button>
+                <Button
+                  variant='link'
+                  className='text-xs text-muted-foreground'
+                  onClick={handleClearSearch}
+                >
+                  Clear search
+                </Button>
               </div>
             ) : (
               <div className='py-6 text-center text-sm'>Type to search</div>

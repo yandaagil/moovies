@@ -20,7 +20,7 @@ const Hyperlink = ({ links }: { links?: MovieDetailList | null }) => {
         </Button>
       </Link>
 
-      {/* trailer */}
+      {/* Trailer */}
       {movieTrailerKey &&
         <>
           <Player movieTrailerKey={movieTrailerKey ?? ""} />
@@ -33,7 +33,7 @@ const Hyperlink = ({ links }: { links?: MovieDetailList | null }) => {
         </>
       }
 
-      {/* website */}
+      {/* Website */}
       {links?.homepage &&
         <Link href={links?.homepage ?? ""} target="__blank">
           <Button variant="outline">

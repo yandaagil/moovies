@@ -22,7 +22,7 @@ const OtherMovies = ({ title, movies, notFound }: OtherMoviesProps) => {
 
       {movies?.length === 0 && <p className="mt-2 text-sm lg:text-base">{notFound}</p>}
 
-      {/* movie card */}
+      {/* Movie Card */}
       {movies !== undefined && movies.length > 0 &&
         <>
           <Carousel opts={{ align: "start" }} className="w-full max-w-full mt-2">

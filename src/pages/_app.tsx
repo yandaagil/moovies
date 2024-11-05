@@ -4,8 +4,11 @@ import MainLayout from '@/components/layout/mainLayout'
 import { ThemeProvider } from "next-themes";
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
+
+const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -16,10 +19,12 @@ export default function App({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <ThemeProvider>
-        <MainLayout>
-          <Component {...pageProps} />
-          <Analytics />
-        </MainLayout>
+        <QueryClientProvider client={queryClient}>
+          <MainLayout>
+            <Component {...pageProps} />
+            <Analytics />
+          </MainLayout>
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   )

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ImageOff } from 'lucide-react';
-import { ratingBadge } from '@/utils/rating';
+import { ratingBadge } from '@/helpers/rating';
 import { MovieList } from '@/types/type';
 import { Card } from './ui/card';
 

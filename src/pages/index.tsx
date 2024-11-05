@@ -1,32 +1,23 @@
-import { useEffect, useState } from "react";
 import Title from '@/components/head';
-import { MovieList } from '@/types/type';
 import MovieContainer from "@/components/movieContainer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import movieServices from "@/services/services";
+import { usePopularMovies, useTopRatedMovies, useUpcomingMovies } from "@/hooks/useMovies";
 
 export default function Home() {
-  const [popularMovies, setPopularMovies] = useState<MovieList[]>([]);
-  const [upcomingMovies, setUpcomingMovies] = useState<MovieList[]>([]);
-  const [topRatedMovies, setTopRatedMovies] = useState<MovieList[]>([]);
+  const popularMoviesQuery = usePopularMovies();
+  const upcomingMoviesQuery = useUpcomingMovies();
+  const topRatedMoviesQuery = useTopRatedMovies();
+
+  const popularMovies = popularMoviesQuery.data?.pages.flatMap(page => page.data.results) ?? [];
+  const upcomingMovies = upcomingMoviesQuery.data?.pages.flatMap(page => page.data.results) ?? [];
+  const topRatedMovies = topRatedMoviesQuery.data?.pages.flatMap(page => page.data.results) ?? [];
+
   const movies = [
     { title: "Popular", movies: popularMovies },
     { title: "Upcoming", movies: upcomingMovies },
     { title: "Top Rated", movies: topRatedMovies }
   ];
-
-  useEffect(() => {
-    movieServices.getPopularMovies(1).then(({ data }) => {
-      setPopularMovies(data.results);
-    });
-    movieServices.getUpcomingMovies(1).then(({ data }) => {
-      setUpcomingMovies(data.results);
-    });
-    movieServices.getTopRatedMovies(1).then(({ data }) => {
-      setTopRatedMovies(data.results);
-    });
-  }, []);
 
   return (
     <>
